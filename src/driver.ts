@@ -50,7 +50,7 @@ const isLitraDevice = (device: HID.Device): boolean => {
   );
 };
 
-const HIDDeviceToDevice = (hidDevice: HID.Device): Device => {
+const hidDeviceToDevice = (hidDevice: HID.Device): Device => {
   return {
     type: getDeviceTypeByProductId(hidDevice.productId),
     hid: new HID.HID(hidDevice.path as string),
@@ -66,17 +66,17 @@ const HIDDeviceToDevice = (hidDevice: HID.Device): Device => {
  * or `null` if a matching device cannot be found connected to your computer.
  */
 export const findDevice = (): Device | null => {
-  const matchingDevice = HID.devices().find((device) => isLitraDevice(device));
+  const matchingDevice = HID.devices().find(isLitraDevice);
 
   if (matchingDevice) {
-    return HIDDeviceToDevice(matchingDevice);
+    return hidDeviceToDevice(matchingDevice);
   } else {
     return null;
   }
 };
 
 /**
- * Finds one more more Logitech Litra devices and returns them.
+ * Finds one or more Logitech Litra devices and returns them.
  * Returns an empty `Array` if no supported devices could be found
  * connected to your computer.
  *
@@ -85,14 +85,8 @@ export const findDevice = (): Device | null => {
  * Array will be empty if no matching devices could be found connected to your computer.
  */
 export const findDevices = (): Device[] => {
-  const devices: Device[] = [];
-  const matchingDevices = HID.devices().filter((device) => isLitraDevice(device));
-
-  for (const device of matchingDevices) {
-    devices.push(HIDDeviceToDevice(device));
-  }
-
-  return devices;
+  const matchingDevices = HID.devices().filter(isLitraDevice);
+  return matchingDevices.map(hidDeviceToDevice);
 };
 
 /**
