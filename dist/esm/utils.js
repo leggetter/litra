@@ -1,3 +1,6 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.percentageWithinRange = exports.integerToBytes = exports.padRight = void 0;
 /**
  * Pads the provided array to a specified length, adding the required
  * number of occurences of the padding element to the end of the array.
@@ -8,7 +11,7 @@
  * @returns {any[]} The array padded to the required length
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const padRight = (array, length, paddingElement) => {
+const padRight = (array, length, paddingElement) => {
     if (array.length >= length) {
         return array;
     }
@@ -19,6 +22,7 @@ export const padRight = (array, length, paddingElement) => {
             .flat(),
     ];
 };
+exports.padRight = padRight;
 /**
  * Converts the provided integer into an array of two bytes, with the most
  * significant byte at the beginning of the array.
@@ -30,12 +34,13 @@ export const padRight = (array, length, paddingElement) => {
  * of type bytes, with the most significant byte at the beginning of the
  * array.
  */
-export const integerToBytes = (integer) => {
+const integerToBytes = (integer) => {
     if (!Number.isInteger(integer)) {
         throw 'Provided value must be an integer';
     }
     return [Math.trunc(integer / 256), integer % 256];
 };
+exports.integerToBytes = integerToBytes;
 /**
  * Finds a given percentage within a range - for example, the 50% marker
  * in the range 0 to 200 is 100.
@@ -45,6 +50,7 @@ export const integerToBytes = (integer) => {
  * @param {number} endRange The number at the end of the range
  * @returns {number} The value at the given percentage
  */
-export const percentageWithinRange = (percentage, startRange, endRange) => {
+const percentageWithinRange = (percentage, startRange, endRange) => {
     return Math.round(Math.ceil(((percentage - 1) / (100 - 1)) * (endRange - startRange) + startRange));
 };
+exports.percentageWithinRange = percentageWithinRange;
