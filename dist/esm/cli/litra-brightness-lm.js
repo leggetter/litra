@@ -1,11 +1,12 @@
 #!/usr/bin/env node
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const driver_1 = require("./../driver");
+const driver_1 = require("../driver");
 try {
     const device = (0, driver_1.findDevice)();
     if (device) {
-        (0, driver_1.turnOff)(device);
+        const value = process.argv[2];
+        (0, driver_1.setBrightnessInLumen)(device, parseInt(value));
     }
     else {
         throw 'Device not found';

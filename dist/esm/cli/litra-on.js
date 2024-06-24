@@ -1,9 +1,11 @@
 #!/usr/bin/env node
-import { findDevice, turnOn } from './../driver';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const driver_1 = require("./../driver");
 try {
-    const device = findDevice();
+    const device = (0, driver_1.findDevice)();
     if (device) {
-        turnOn(device);
+        (0, driver_1.turnOn)(device);
     }
     else {
         throw 'Device not found';
